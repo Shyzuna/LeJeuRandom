@@ -11,6 +11,7 @@ screen = pygame.display.set_mode(size)
 defaultColor = 0,0,0
 MapManager.Instance().loadMap("../resources/maps/map1.map")
 MapManager.Instance().printMap()
+
 """Event loop"""
 while 1:
     for event in pygame.event.get():
