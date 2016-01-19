@@ -1,19 +1,22 @@
 # -*-coding:UTF-8 -*
 """Manage the maps"""
 
-import os
+import os, pygame
 from manager.Singleton import Singleton
 
 @Singleton
 class MapManager:
 
     def __init__(self):
+        self._sizeScreen = (800,600)
+        self._tileSize = (32,32)
         self._currentMapPath = ""
         self._currentMapName = ""
         self._mapLoaded = False
         self._mapW = 0
         self._mapH = 0
         self._currentMap = []
+        self._tileList = []
 
     def loadMap(self, path):
         self._mapLoaded = False
@@ -24,8 +27,8 @@ class MapManager:
                 if i == 0:
                     self._currentMapName = line
                 elif i == 1:
-                    self._mapW = line.split("x")[0]
-                    self._mapH = line.split("x")[1]
+                    self._mapW = int(line.split("x")[0])
+                    self._mapH = int(line.split("x")[1])
                 elif i == 2:
                     pass
                 else:
@@ -44,3 +47,52 @@ class MapManager:
                 for val in line:
                     chaine += str(val)
                 print(chaine)
+
+    def addTile(self, number, name, path):
+        tile = (name, pygame.image.load(path))
+        self._tileList.insert(number,tile)
+
+    def delTile(self, number):
+        del self._tileList[number]
+
+    def blitTiles(self, pos, screen):
+
+        caseX = (pos[0] - self._sizeScreen[0]/2) // self._tileSize[0]
+        caseY = (pos[1] - self._sizeScreen[1]/2) // self._tileSize[1]
+        restX = (pos[0] - self._sizeScreen[0]/2) % self._tileSize[0]
+        restY = (pos[1] - self._sizeScreen[1]/2) % self._tileSize[1]
+
+        """check if we are in border of the map"""
+        if pos[0] - self._sizeScreen[0]/2 < 0:
+            caseX = 0
+            restX = 0
+
+        if pos[1] - self._sizeScreen[1]/2 < 0:
+            caseY = 0
+            restY = 0
+
+        if pos[0] + self._sizeScreen[0]/2 > self._mapW*self._tileSize[0]:
+            caseX = (self._mapW*self._tileSize[0] - self._sizeScreen[0]) // self._tileSize[0]
+            restX = (self._mapW*self._tileSize[0] - self._sizeScreen[0]) % self._tileSize[0]
+
+        if pos[1] + self._sizeScreen[1]/2 > self._mapH*self._tileSize[1]:
+            caseY = (self._mapW*self._tileSize[1] - self._sizeScreen[1]) // self._tileSize[1]
+            restY = (self._mapW*self._tileSize[1] - self._sizeScreen[1]) % self._tileSize[1]
+
+        startBlitX = 0 - restX
+        startBlitY = 0 - restY
+        i = caseX
+        j = caseY
+
+        """LINE"""
+        while startBlitY < self._sizeScreen[1]:
+            startBlitX = 0 - restX
+            i = caseX
+            """COL"""
+            while startBlitX < self._sizeScreen[0]:
+                blitPos = (startBlitX, startBlitY)
+                screen.blit(self._tileList[self._currentMap[i][j]][1],blitPos)
+                startBlitX += self._tileSize[0]
+                i += 1
+            startBlitY += self._tileSize[1]
+            j += 1
