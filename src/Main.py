@@ -1,7 +1,7 @@
 # -*-coding:UTF-8 -*
 """Main"""
 
-import sys, pygame
+import sys, pygame, os
 from manager.MapManager import MapManager
 pygame.init()
 
@@ -9,8 +9,8 @@ size = width, height = 800, 600
 
 screen = pygame.display.set_mode(size)
 defaultColor = 0,0,0
-m = MapManager()
-
+MapManager.Instance().loadMap("../resources/maps/map1.map")
+MapManager.Instance().printMap()
 """Event loop"""
 while 1:
     for event in pygame.event.get():
