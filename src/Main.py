@@ -2,12 +2,14 @@
 """Main"""
 
 import sys, pygame
+from manager.MapManager import MapManager
 pygame.init()
 
 size = width, height = 800, 600
 
 screen = pygame.display.set_mode(size)
 defaultColor = 0,0,0
+m = MapManager()
 
 """Event loop"""
 while 1:
