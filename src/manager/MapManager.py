@@ -81,13 +81,13 @@ class MapManager:
 
         startBlitX = 0 - restX
         startBlitY = 0 - restY
-        i = caseX
-        j = caseY
+        i = int(caseX)
+        j = int(caseY)
 
         """LINE"""
         while startBlitY < self._sizeScreen[1]:
             startBlitX = 0 - restX
-            i = caseX
+            i = int(caseX)
             """COL"""
             while startBlitX < self._sizeScreen[0]:
                 blitPos = (startBlitX, startBlitY)
