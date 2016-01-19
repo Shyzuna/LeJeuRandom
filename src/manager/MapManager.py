@@ -12,4 +12,4 @@ class MapManager:
         self._mapLoaded = False
         self._mapW = 0
         self._mapH = 0
-        self._currentMap = array()
+        self._currentMap = []

@@ -9,7 +9,7 @@ size = width, height = 800, 600
 
 screen = pygame.display.set_mode(size)
 defaultColor = 0,0,0
-m = MapManager()
+m = MapManager.Instance()
 
 """Event loop"""
 while 1:
