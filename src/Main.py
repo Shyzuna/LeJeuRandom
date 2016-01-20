@@ -1,8 +1,10 @@
 # -*-coding:UTF-8 -*
 """Main"""
 
-import sys, pygame
+import sys, os, pygame
 from manager.MapManager import MapManager
+
+SRC_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
 
 def convertToViewport(position, screen):
@@ -16,15 +18,17 @@ def convertToViewport(position, screen):
 
 pygame.init()
 
+clock = pygame.time.Clock()
+
 size = width, height = 800, 600
 
 screen = pygame.display.set_mode(size)
 defaultColor = 0,0,0
-MapManager.Instance().loadMap("../resources/maps/map1.map")
+MapManager.Instance().loadMap(SRC_DIR_PATH + "/../resources/maps/map1.map")
 MapManager.Instance().printMap()
-MapManager.Instance().addTile(0, "grass", "../resources/tiles/grass.bmp")
-MapManager.Instance().addTile(1, "rock", "../resources/tiles/rock.bmp")
-MapManager.Instance().addTile(10, "player", "../resources/tiles/player.bmp")
+MapManager.Instance().addTile(0, "grass", SRC_DIR_PATH + "/../resources/tiles/grass.bmp")
+MapManager.Instance().addTile(1, "rock", SRC_DIR_PATH + "/../resources/tiles/rock.bmp")
+MapManager.Instance().addTile(10, "player", SRC_DIR_PATH + "/../resources/tiles/player.bmp")
 
 x = 100
 y = 100
@@ -50,3 +54,4 @@ while 1:
     MapManager.Instance().blitTiles(pos, screen)
     screen.blit(MapManager.Instance()._tileList[2][1],pos2)
     pygame.display.flip()
+    clock.tick(30)
