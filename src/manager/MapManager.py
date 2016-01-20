@@ -1,5 +1,5 @@
 # -*-coding:UTF-8 -*
-"""Manage the maps"""
+#Manage the maps
 
 import os, pygame
 from manager.Singleton import Singleton
@@ -62,7 +62,7 @@ class MapManager:
         restX = (pos[0] - self._sizeScreen[0]/2) % self._tileSize[0]
         restY = (pos[1] - self._sizeScreen[1]/2) % self._tileSize[1]
 
-        """check if we are in border of the map"""
+        #check if we are in border of the map
         if pos[0] - self._sizeScreen[0]/2 < 0:
             caseX = 0
             restX = 0
@@ -76,19 +76,19 @@ class MapManager:
             restX = (self._mapW*self._tileSize[0] - self._sizeScreen[0]) % self._tileSize[0]
 
         if pos[1] + self._sizeScreen[1]/2 > self._mapH*self._tileSize[1]:
-            caseY = (self._mapW*self._tileSize[1] - self._sizeScreen[1]) // self._tileSize[1]
-            restY = (self._mapW*self._tileSize[1] - self._sizeScreen[1]) % self._tileSize[1]
+            caseY = (self._mapH*self._tileSize[1] - self._sizeScreen[1]) // self._tileSize[1]
+            restY = (self._mapH*self._tileSize[1] - self._sizeScreen[1]) % self._tileSize[1]
 
         startBlitX = 0 - restX
         startBlitY = 0 - restY
         i = int(caseX)
         j = int(caseY)
 
-        """LINE"""
+        #Line
         while startBlitY < self._sizeScreen[1]:
             startBlitX = 0 - restX
             i = int(caseX)
-            """COL"""
+            #Col
             while startBlitX < self._sizeScreen[0]:
                 blitPos = (startBlitX, startBlitY)
                 screen.blit(self._tileList[self._currentMap[i][j]][1],blitPos)
