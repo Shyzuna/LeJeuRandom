@@ -9,6 +9,7 @@ class MapManager:
 
     def __init__(self):
         self._sizeScreen = (800,600)
+        # _tileSize = (width, height)
         self._tileSize = (32,32)
         self._currentMapPath = ""
         self._currentMapName = ""
@@ -71,13 +72,13 @@ class MapManager:
             caseY = 0
             restY = 0
 
-        if pos[0] + self._sizeScreen[0]/2 > self._mapW*self._tileSize[0]:
-            caseX = (self._mapW*self._tileSize[0] - self._sizeScreen[0]) // self._tileSize[0]
-            restX = (self._mapW*self._tileSize[0] - self._sizeScreen[0]) % self._tileSize[0]
+        if pos[0] + self._sizeScreen[0]/2 > self.mapWidthPixels:
+            caseX = (self.mapWidthPixels - self._sizeScreen[0]) // self._tileSize[0]
+            restX = (self.mapWidthPixels - self._sizeScreen[0]) % self._tileSize[0]
 
-        if pos[1] + self._sizeScreen[1]/2 > self._mapH*self._tileSize[1]:
-            caseY = (self._mapH*self._tileSize[1] - self._sizeScreen[1]) // self._tileSize[1]
-            restY = (self._mapH*self._tileSize[1] - self._sizeScreen[1]) % self._tileSize[1]
+        if pos[1] + self._sizeScreen[1]/2 > self.mapHeightPixels:
+            caseY = (self.mapHeightPixels - self._sizeScreen[1]) // self._tileSize[1]
+            restY = (self.mapHeightPixels - self._sizeScreen[1]) % self._tileSize[1]
 
         startBlitX = 0 - restX
         startBlitY = 0 - restY
@@ -96,3 +97,11 @@ class MapManager:
                 i += 1
             startBlitY += self._tileSize[1]
             j += 1
+
+    @property
+    def mapWidthPixels(self):
+        return self._mapW * self._tileSize[0]
+
+    @property
+    def mapHeightPixels(self):
+        return self._mapH * self._tileSize[1]
