@@ -58,7 +58,7 @@ while 1:
                 player.move(-1, 0)
 
 
-    pos = (player.rect.left,player.rect.top)
+    pos = (player.x,player.y)
     pos2 = convertToViewport(pos,size)
     screen.fill(defaultColor)
     MapManager.Instance().blitTiles(pos, screen)
