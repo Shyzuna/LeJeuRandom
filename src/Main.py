@@ -3,7 +3,7 @@
 
 import sys, os, pygame
 from manager.MapManager import MapManager
-
+from units.Player import Player
 SRC_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -30,28 +30,44 @@ MapManager.Instance().addTile(0, "grass", SRC_DIR_PATH + "/../resources/tiles/gr
 MapManager.Instance().addTile(1, "rock", SRC_DIR_PATH + "/../resources/tiles/rock.bmp")
 MapManager.Instance().addTile(10, "player", SRC_DIR_PATH + "/../resources/tiles/player.bmp")
 
-x = 100
-y = 100
+
+player = Player()
+allgrp = pygame.sprite.RenderUpdates()
+player.add(allgrp)
+
+bg = pygame.Surface(size)
+
 """Event loop"""
 pygame.key.set_repeat(1,10)
 while 1:
+
+    allgrp.clear(screen, bg)
+    allgrp.update()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                y -= 1
+                player.move(-1, 1)
             if event.key == pygame.K_DOWN:
-                y += 1
+                player.move(1, 1)
             if event.key == pygame.K_RIGHT:
-                x += 1
+                player.move(1, 0)
             if event.key == pygame.K_LEFT:
-                x -= 1
+                player.move(-1, 0)
 
-    pos = (x,y)
+
+    pos = (player.rect.left,player.rect.top)
     pos2 = convertToViewport(pos,size)
     screen.fill(defaultColor)
     MapManager.Instance().blitTiles(pos, screen)
-    screen.blit(MapManager.Instance()._tileList[2][1],pos2)
     pygame.display.flip()
+
+    # Draw the sprites of group "allgrp" on the screen
+    dirty = allgrp.draw(screen)
+    # Update the display
+    pygame.display.update(dirty)
+
+    # Frequency (FPS) limit
     clock.tick(30)
