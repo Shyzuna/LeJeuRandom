@@ -22,7 +22,7 @@ class Player(BaseUnit):
             self.speed = 3
             self.x = 100
             self.y = 100
-            # Hitbox = (top, left, down right)
+            # Hitbox = (top, left, down, right)
             self.hitbox = (16, 16, 16, 16)
             # Starting position
             self.rect.top = 100 - self.hitbox[0]
@@ -31,10 +31,7 @@ class Player(BaseUnit):
             pass
 
     def move(self, direction, axis):
-        tileW = MapManager.Instance()._tileSize[0]
-        tileH = MapManager.Instance()._tileSize[1]
-        # mapsize in pixels: (width, height)
-        mapsize = MapManager.Instance()._mapW * tileW, MapManager.Instance()._mapH * tileH
+        mapsize = MapManager.Instance().mapWidthPixels, MapManager.Instance().mapHeightPixels
 
         displacement = direction* self.speed
 
